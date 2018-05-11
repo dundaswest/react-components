@@ -1,41 +1,59 @@
-var App = (props) => (
+var App = () => (
   <div>
     <h2>My Todo List</h2>
-    <GroceryListItem todo={['Apple']}/>
+    <GroceryList groceries={['Apple', 'Orange']} />
   </div>
 );
 
-var Apple = () => (
-  <div>Apple</div>
+var Apple = (props) => (
+  <li>{props.grocery}</li>
+);
+
+var Orange = (props) => (
+  <li>{props.grocery}</li>
 )
-var Orange = () => (
-  <div>Orange</div>
-)
+
+// var GroceryListItem = (props) => (
+//   <li>
+//     {props.grocery}
+//   </li>
+// );
+
+var GroceryList = (props) => (
+  <ul>
+    {props.groceries.map(grocery =>
+      <GroceryListItem key={`key-${grocery}`} grocery={grocery} />
+    )}
+  </ul>
+);
+
 
 
 class GroceryListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      done: false
+      bold: false
     };
   }
-  onListItemHover() {
+
+  onMouseTestFunction() {
     this.setState({
-      done: !this.state.done
+      bold: !this.state.bold
     });
   }
 
   render() {
-    var style = {
-      textWeight: this.state.done ? 'bold' : 'none'
+     var style = {
+      'font-weight': this.state.bold ? 'bold' : 'normal'
     };
     return (
-      <li style={style} onHover={this.onListItemHover.bind(this)}>{this.props.todo}</li>
+      <li style={style} onMouseEnter={this.onMouseTestFunction.bind(this)}>{this.props.grocery}</li>
     );
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
 
 
